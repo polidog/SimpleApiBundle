@@ -1,0 +1,38 @@
+services:
+
+    # decoder
+    Polidog\SimpleApiBundle\Decoder\DecoderProvider:
+        arguments:
+            $decoders:
+                - '@Polidog\SimpleApiBundle\Decoder\JsonDecoder'
+
+    Polidog\SimpleApiBundle\Decoder\JsonDecoder:
+        class: Polidog\SimpleApiBundle\Decoder\JsonDecoder
+
+    # handlers
+    Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider:
+        arguments:
+            $encoders:
+                - '@Polidog\SimpleApiBundle\ResponseHandler\JsonHandler'
+
+    Polidog\SimpleApiBundle\ResponseHandler\JsonHandler:
+        class: Polidog\SimpleApiBundle\ResponseHandler\JsonHandler
+
+    # Subscriber
+    Polidog\SimpleApiBundle\EventListener\BodySubscriber:
+        arguments:
+            $decoderProvider: '@Polidog\SimpleApiBundle\Decoder\DecoderProvider'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Polidog\SimpleApiBundle\EventListener\ViewListener:
+        arguments:
+            $provider: '@Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Polidog\SimpleApiBundle\EventListener\AnnotationSubscriber:
+        arguments:
+            $annotationReader: '@annotation_reader'
+        tags:
+            - { name: kernel.event_subscriber }

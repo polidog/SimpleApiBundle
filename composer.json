@@ -1,0 +1,31 @@
+{
+    "name": "polidog/simple-api-bundle",
+    "description": "Simple API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "polidog",
+            "email": "polidogs@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+
+        "symfony/http-foundation": "^4.1",
+        "symfony/config": "^4.1",
+        "symfony/http-kernel": "^4.1",
+        "symfony/event-dispatcher": "^4.1",
+        "symfony/dependency-injection": "^4.1",
+        "doctrine/common": "^2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polidog\\SimpleApiBundle\\": "src/"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "phpunit/phpunit": "^7.3"
+    }
+}
