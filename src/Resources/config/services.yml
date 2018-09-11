@@ -31,6 +31,13 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Polidog\SimpleApiBundle\EventListener\ExceptionListener:
+        arguments:
+            $provider: '@Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider'
+        tags:
+            - { name: kernel.event_subscriber }
+
+
     Polidog\SimpleApiBundle\EventListener\AnnotationSubscriber:
         arguments:
             $annotationReader: '@annotation_reader'
