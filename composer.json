@@ -11,13 +11,14 @@
     ],
     "require": {
         "php": "^7.1",
+        "ext-json": "*",
 
-        "symfony/http-foundation": "^4.1",
-        "symfony/config": "^4.1",
-        "symfony/http-kernel": "^4.1",
-        "symfony/event-dispatcher": "^4.1",
-        "symfony/dependency-injection": "^4.1",
-        "doctrine/common": "^2.9"
+        "symfony/http-foundation": "^3.4|^4.0",
+        "symfony/config": "^3.4|^4.0",
+        "symfony/http-kernel": "^3.4|^4.0",
+        "symfony/event-dispatcher": "^3.4|^4.0",
+        "symfony/dependency-injection": "^3.4|^4.0",
+        "doctrine/common": "^2.6"
     },
     "autoload": {
         "psr-4": {
