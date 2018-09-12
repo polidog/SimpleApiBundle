@@ -31,7 +31,6 @@ class BodySubscriber implements EventSubscriberInterface
     public function onKernelController(FilterControllerEvent $event): void
     {
         $request = $event->getRequest();
-        $contentType = $request->headers->get('Content-Type');
         $annotation = $request->attributes->get('_simple_api_annotation');
 
         if (null === $annotation) {
