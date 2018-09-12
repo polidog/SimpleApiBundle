@@ -9,6 +9,16 @@
             "email": "polidogs@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Polidog\\SimpleApiBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Polidog\\SimpleApiBundle\\Test\\": "tests"
+        }
+    },
     "require": {
         "php": "^7.1",
         "ext-json": "*",
@@ -19,11 +29,6 @@
         "symfony/event-dispatcher": "^3.4|^4.0",
         "symfony/dependency-injection": "^3.4|^4.0",
         "doctrine/common": "^2.6"
-    },
-    "autoload": {
-        "psr-4": {
-            "Polidog\\SimpleApiBundle\\": "src/"
-        }
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.13",
