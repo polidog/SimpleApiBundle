@@ -28,11 +28,6 @@ class Api implements ApiInterface
     private $bodyParse = true;
 
     /**
-     * @var bool
-     */
-    private $useResponseHandler = true;
-
-    /**
      * Api constructor.
      *
      * @param $type
@@ -43,7 +38,7 @@ class Api implements ApiInterface
         if (isset($params['value'])) {
             $this->statusCode = (int) $params['value'];
         }
-        foreach (['type', 'bodyParse', 'useResponseHandler', 'statusCode'] as $target) {
+        foreach (['type', 'bodyParse', 'statusCode'] as $target) {
             if (isset($params[$target])) {
                 $this->$target = $params[$target];
             }

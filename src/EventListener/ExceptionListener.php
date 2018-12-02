@@ -18,6 +18,7 @@ class ExceptionListener implements EventSubscriberInterface
 
     /**
      * ExceptionListener constructor.
+     *
      * @param HandlerProviderInterface $provider
      */
     public function __construct(HandlerProviderInterface $provider)
@@ -25,16 +26,11 @@ class ExceptionListener implements EventSubscriberInterface
         $this->provider = $provider;
     }
 
-
     public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $request = $event->getRequest();
         $annotation = $request->attributes->get('_simple_api_annotation');
         if (null === $annotation) {
-            return;
-        }
-
-        if (false === $annotation->isUseResponseHandler()) {
             return;
         }
 

@@ -35,10 +35,6 @@ class ViewListener implements EventSubscriberInterface
             return;
         }
 
-        if (false === $annotation->isUseResponseHandler()) {
-            return;
-        }
-
         $parameters = $event->getControllerResult();
 
         if ($parameters instanceof Response) {
