@@ -13,7 +13,12 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $treeBuilder->root('polidog_simple_api');
-
+        $rootNode = $treeBuilder->getRootNode();
+        $rootNode
+            ->children()
+                ->booleanNode('use_jms_serializer')
+                ->defaultTrue()
+            ->end();
         return $treeBuilder;
     }
 }
