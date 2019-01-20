@@ -15,9 +15,6 @@ services:
             $encoders:
                 - '@Polidog\SimpleApiBundle\ResponseHandler\JsonHandler'
 
-    Polidog\SimpleApiBundle\ResponseHandler\JsonHandler:
-        class: Polidog\SimpleApiBundle\ResponseHandler\JsonHandler
-
     # Subscriber
     Polidog\SimpleApiBundle\EventListener\BodySubscriber:
         arguments:

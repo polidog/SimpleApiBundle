@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class JsonHandler implements HandlerInterface
 {
+    private const FORMAT = 'json';
+
     /**
      * @var bool
      */
@@ -30,7 +32,7 @@ class JsonHandler implements HandlerInterface
 
     public function support(string $format): bool
     {
-        return 'json' === $format;
+        return self::FORMAT === $format;
     }
 
     public function handle(array $parameters, Response $response = null): Response
@@ -38,7 +40,7 @@ class JsonHandler implements HandlerInterface
         if (false === $this->useJmsSerializer) {
             return new JsonResponse($parameters);
         }
-        $json = $this->serializer->serialize($parameters);
+        $json = $this->serializer->serialize($parameters, self::FORMAT);
         return new JsonResponse($json);
     }
 }
