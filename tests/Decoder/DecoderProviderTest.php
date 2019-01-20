@@ -32,7 +32,7 @@ class DecoderProviderTest extends TestCase
             ->shouldHaveBeenCalled();
     }
 
-    public function testCheckNoSupportedFormat() : void
+    public function testCheckNoSupportedFormat(): void
     {
         $format = 'xml';
 
@@ -45,10 +45,9 @@ class DecoderProviderTest extends TestCase
 
         $this->decoder->support($format)
             ->shouldHaveBeenCalled();
-
     }
 
-    public function testGetDecoder() : void
+    public function testGetDecoder(): void
     {
         $format = 'json';
 
@@ -63,13 +62,12 @@ class DecoderProviderTest extends TestCase
 
         $this->decoder->support($format)
             ->shouldHaveBeenCalled();
-
     }
 
     /**
-     * @expectedException Polidog\SimpleApiBundle\Exception\UnsupportedMediaTypeHttpException
+     * @expectedException \Polidog\SimpleApiBundle\Exception\UnsupportedMediaTypeHttpException
      */
-    public function testNoSupportedGetDecoder() : void
+    public function testNoSupportedGetDecoder(): void
     {
         $format = 'xml';
 
@@ -79,5 +77,4 @@ class DecoderProviderTest extends TestCase
         $decoderProvider = new DecoderProvider([$this->decoder->reveal()]);
         $decoderProvider->getDecoder($format);
     }
-
 }

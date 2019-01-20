@@ -41,6 +41,7 @@ class JsonHandler implements HandlerInterface
             return new JsonResponse($parameters);
         }
         $json = $this->serializer->serialize($parameters, self::FORMAT);
+
         return new JsonResponse($json);
     }
 }

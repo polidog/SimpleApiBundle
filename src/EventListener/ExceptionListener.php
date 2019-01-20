@@ -39,7 +39,7 @@ class ExceptionListener implements EventSubscriberInterface
             'code' => $event->getException()->getCode(),
         ];
 
-        $statusCode = $event->getException()->getCode() === 0 ? 500 : $event->getException()->getCode();
+        $statusCode = 0 === $event->getException()->getCode() ? 500 : $event->getException()->getCode();
 
         $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($parameters);
         $newResponse->setStatusCode($statusCode);

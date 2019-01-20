@@ -19,6 +19,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('use_jms_serializer')
                 ->defaultTrue()
             ->end();
+
         return $treeBuilder;
     }
 }
