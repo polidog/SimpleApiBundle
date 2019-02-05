@@ -24,10 +24,12 @@ class JsonHandler implements HandlerInterface
 
     /**
      * @param bool $useJmsSerializer
+     * @param SerializerInterface $serializer
      */
-    public function __construct(bool $useJmsSerializer)
+    public function __construct(bool $useJmsSerializer, SerializerInterface $serializer = null)
     {
         $this->useJmsSerializer = $useJmsSerializer;
+        $this->serializer = $serializer;
     }
 
     public function support(string $format): bool
@@ -37,11 +39,10 @@ class JsonHandler implements HandlerInterface
 
     public function handle(array $parameters, Response $response = null): Response
     {
-        if (false === $this->useJmsSerializer) {
+        if (false === $this->useJmsSerializer || $this->serializer === null) {
             return new JsonResponse($parameters);
         }
         $json = $this->serializer->serialize($parameters, self::FORMAT);
-
-        return new JsonResponse($json);
+        return JsonResponse::fromJsonString($json);
     }
 }

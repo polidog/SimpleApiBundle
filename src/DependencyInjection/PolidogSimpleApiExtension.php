@@ -20,21 +20,12 @@ class PolidogSimpleApiExtension extends Extension
 
         $definition = new Definition(JsonHandler::class);
         $definition->setArguments([
-            '$useJmsSerializer' => $this->isUseJmsSeriazier($config, $container),
+            '$useJmsSerializer' => $config['use_jms_serializer'],
         ]);
         $definition->setAutowired(true);
         $container->setDefinition(JsonHandler::class, $definition);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-    }
-
-    private function isUseJmsSeriazier($config, ContainerBuilder $container): bool
-    {
-        if (false === $container->hasDefinition('jms_serializer.serializer')) {
-            return false;
-        }
-
-        return $config['use_jms_serializer'];
     }
 }
