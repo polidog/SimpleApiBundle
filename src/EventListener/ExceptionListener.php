@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polidog\SimpleApiBundle\EventListener;
 
+use Polidog\SimpleApiBundle\Exception\ErrorException;
 use Polidog\SimpleApiBundle\ResponseHandler\HandlerProviderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -34,10 +35,15 @@ class ExceptionListener implements EventSubscriberInterface
             return;
         }
 
-        $parameters = [
-            'message' => $event->getException()->getMessage(),
-            'code' => $event->getException()->getCode(),
-        ];
+        if ($event->getException() instanceof ErrorException) {
+            $parameters = [
+                'errors' => $event->getException()->getData()
+            ];
+        } else {
+            $parameters = [
+                'message' => $event->getException()->getMessage()
+            ];
+        }
 
         $statusCode = 0 === $event->getException()->getCode() ? 500 : $event->getException()->getCode();
 
