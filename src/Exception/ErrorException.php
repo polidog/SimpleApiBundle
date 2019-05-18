@@ -1,7 +1,8 @@
 <?php
 
-namespace Polidog\SimpleApiBundle\Exception;
+declare(strict_types=1);
 
+namespace Polidog\SimpleApiBundle\Exception;
 
 class ErrorException extends \RuntimeException
 {
@@ -10,13 +11,15 @@ class ErrorException extends \RuntimeException
     /**
      * @param int $statusCode
      * @param $data
+     *
      * @return ErrorException
      */
-    public static function newException(int $statusCode, $data) :self
+    public static function newException(int $statusCode, $data): self
     {
         $self = new self();
         $self->code = $statusCode;
         $self->data = $data;
+
         return $self;
     }
 
@@ -27,5 +30,4 @@ class ErrorException extends \RuntimeException
     {
         return $this->data;
     }
-
 }

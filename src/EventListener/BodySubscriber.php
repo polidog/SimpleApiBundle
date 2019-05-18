@@ -49,14 +49,14 @@ class BodySubscriber implements EventSubscriberInterface
         $request->request = new ParameterBag($decodedContent);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => ['onKernelController', 30],
         ];
     }
 
-    protected function isDecodeable(Request $request)
+    protected function isDecodeable(Request $request): bool
     {
         if (!\in_array($request->getMethod(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
             return false;
@@ -65,9 +65,10 @@ class BodySubscriber implements EventSubscriberInterface
         return !$this->isFormRequest($request);
     }
 
-    private function isFormRequest(Request $request) :bool
+    private function isFormRequest(Request $request): bool
     {
         $contentTypes = $request->getAcceptableContentTypes();
+
         return \in_array($contentTypes, ['multipart/form-data', 'application/x-www-form-urlencoded']);
     }
 }
