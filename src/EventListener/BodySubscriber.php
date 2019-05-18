@@ -65,14 +65,9 @@ class BodySubscriber implements EventSubscriberInterface
         return !$this->isFormRequest($request);
     }
 
-    private function isFormRequest(Request $request)
+    private function isFormRequest(Request $request) :bool
     {
-        $contentTypeParts = explode(';', $request->headers->get('Content-Type'));
-
-        if (isset($contentTypeParts[0])) {
-            return \in_array($contentTypeParts[0], ['multipart/form-data', 'application/x-www-form-urlencoded']);
-        }
-
-        return false;
+        $contentTypes = $request->getAcceptableContentTypes();
+        return \in_array($contentTypes, ['multipart/form-data', 'application/x-www-form-urlencoded']);
     }
 }
