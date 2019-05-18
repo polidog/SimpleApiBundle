@@ -13,6 +13,10 @@ class JsonDecoder implements DecoderInterface
 
     public function decode(string $data): array
     {
+        if (0 === \strlen($data)) {
+            return [];
+        }
+
         return @json_decode($data, true);
     }
 }
