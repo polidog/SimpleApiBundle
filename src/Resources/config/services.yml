@@ -31,6 +31,7 @@ services:
     Polidog\SimpleApiBundle\EventListener\ExceptionListener:
         arguments:
             $provider: '@Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider'
+            $logger: '@?monolog.logger'
         tags:
             - { name: kernel.event_subscriber }
 
