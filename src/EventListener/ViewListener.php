@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Polidog\SimpleApiBundle\EventListener;
 
+use Polidog\SimpleApiBundle\Event\ViewParameterEvent;
+use Polidog\SimpleApiBundle\Events;
 use Polidog\SimpleApiBundle\ResponseHandler\HandlerProviderInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -18,13 +21,14 @@ class ViewListener implements EventSubscriberInterface
     private $provider;
 
     /**
-     * ViewListener constructor.
-     *
-     * @param HandlerProviderInterface $provider
+     * @var EventDispatcherInterface
      */
-    public function __construct(HandlerProviderInterface $provider)
+    private $eventDispatcher;
+
+    public function __construct(HandlerProviderInterface $provider, EventDispatcherInterface $eventDispatcher)
     {
         $this->provider = $provider;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function onKernelView(GetResponseForControllerResultEvent $event): void
@@ -41,8 +45,14 @@ class ViewListener implements EventSubscriberInterface
             return;
         }
 
+        if (null === $parameters) {
+            $parameters = [];
+        }
+
         if (\is_array($parameters)) {
-            $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($parameters);
+            $viewEvent = new ViewParameterEvent($parameters, $request);
+            $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
+            $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($viewEvent->getParameters());
             $newResponse->setStatusCode($annotation->getStatusCode());
             $event->setResponse($newResponse);
         }
