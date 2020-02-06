@@ -11,7 +11,9 @@ services:
 
     # handlers
     Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider:
-        autowire: true
+        arguments:
+            $encoders:
+                - '@Polidog\SimpleApiBundle\ResponseHandler\JsonHandler'
 
     # Subscriber
     Polidog\SimpleApiBundle\EventListener\BodySubscriber:
@@ -23,6 +25,7 @@ services:
     Polidog\SimpleApiBundle\EventListener\ViewListener:
         arguments:
             $provider: '@Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider'
+            $eventDispatcher: '@event_dispatcher'
         tags:
             - { name: kernel.event_subscriber }
 
