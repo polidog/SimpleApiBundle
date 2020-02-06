@@ -19,10 +19,16 @@ class ViewParameterEvent extends Event
      */
     private $request;
 
-    public function __construct(array $parameters, Request $request)
+    /**
+     * @var bool
+     */
+    private $masterRequest;
+
+    public function __construct(array $parameters, Request $request, bool $masterRequest)
     {
         $this->parameters = $parameters;
         $this->request = $request;
+        $this->masterRequest = $masterRequest;
     }
 
     public function merge(array $parameters): void
@@ -39,4 +45,13 @@ class ViewParameterEvent extends Event
     {
         return $this->request;
     }
+
+    /**
+     * @return bool
+     */
+    public function isMasterRequest(): bool
+    {
+        return $this->masterRequest;
+    }
+
 }

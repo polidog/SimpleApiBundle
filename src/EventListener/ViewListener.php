@@ -50,7 +50,7 @@ class ViewListener implements EventSubscriberInterface
         }
 
         if (\is_array($parameters)) {
-            $viewEvent = new ViewParameterEvent($parameters, $request);
+            $viewEvent = new ViewParameterEvent($parameters, $request, $event->isMasterRequest());
             $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
             $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($viewEvent->getParameters());
             $newResponse->setStatusCode($annotation->getStatusCode());
