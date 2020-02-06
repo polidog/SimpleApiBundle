@@ -20,8 +20,6 @@ class BodySubscriber implements EventSubscriberInterface
 
     /**
      * BodySubscriber constructor.
-     *
-     * @param DecoderProviderInterface $decoderProvider
      */
     public function __construct(DecoderProviderInterface $decoderProvider)
     {

@@ -23,7 +23,6 @@ class JsonHandler implements HandlerInterface
     private $serializer;
 
     /**
-     * @param bool                $useJmsSerializer
      * @param SerializerInterface $serializer
      */
     public function __construct(bool $useJmsSerializer, SerializerInterface $serializer = null)

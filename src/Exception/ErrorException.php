@@ -9,7 +9,6 @@ class ErrorException extends \RuntimeException
     private $data;
 
     /**
-     * @param int $statusCode
      * @param $data
      *
      * @return ErrorException

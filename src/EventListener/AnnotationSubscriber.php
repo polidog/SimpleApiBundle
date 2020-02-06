@@ -19,8 +19,6 @@ class AnnotationSubscriber implements EventSubscriberInterface
 
     /**
      * ControllerSubscriber constructor.
-     *
-     * @param Reader $annotationReader
      */
     public function __construct(Reader $annotationReader)
     {
@@ -28,8 +26,6 @@ class AnnotationSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param FilterControllerEvent $event
-     *
      * @throws \ReflectionException
      */
     public function onKernelController(FilterControllerEvent $event): void

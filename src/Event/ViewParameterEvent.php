@@ -41,9 +41,6 @@ class ViewParameterEvent extends Event
         return $this->parameters;
     }
 
-    /**
-     * @param array $parameters
-     */
     public function setParameters(array $parameters): void
     {
         $this->parameters = $parameters;
@@ -54,12 +51,8 @@ class ViewParameterEvent extends Event
         return $this->request;
     }
 
-    /**
-     * @return bool
-     */
     public function isMasterRequest(): bool
     {
         return $this->masterRequest;
     }
-
 }

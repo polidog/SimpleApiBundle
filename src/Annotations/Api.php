@@ -53,25 +53,16 @@ class Api implements ApiInterface
         return $this->format;
     }
 
-    /**
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * @return bool
-     */
     public function isBodyParse(): bool
     {
         return $this->bodyParse;
     }
 
-    /**
-     * @return bool
-     */
     public function isUseResponseHandler(): bool
     {
         return $this->useResponseHandler;

@@ -27,7 +27,6 @@ class ExceptionListener implements EventSubscriberInterface
     /**
      * ExceptionListener constructor.
      *
-     * @param HandlerProviderInterface $provider
      * @param LoggerInterface $logger
      */
     public function __construct(HandlerProviderInterface $provider, LoggerInterface $logger = null)
@@ -40,7 +39,6 @@ class ExceptionListener implements EventSubscriberInterface
     {
         $exception = $event->getException();
         $this->logException($exception, sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', \get_class($exception), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
-
 
         $request = $event->getRequest();
         $annotation = $request->attributes->get('_simple_api_annotation');
