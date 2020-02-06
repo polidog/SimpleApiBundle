@@ -11,9 +11,7 @@ services:
 
     # handlers
     Polidog\SimpleApiBundle\ResponseHandler\HandlerProvider:
-        arguments:
-            $encoders:
-                - '@Polidog\SimpleApiBundle\ResponseHandler\JsonHandler'
+        autowire: true
 
     # Subscriber
     Polidog\SimpleApiBundle\EventListener\BodySubscriber:
