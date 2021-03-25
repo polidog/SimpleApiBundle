@@ -8,7 +8,7 @@ $ composer require polidog/simple-api-bundle "dev-master"
 
 Add config/bundles.php
 
-```
+```php
 <?php
 
 return [
@@ -23,7 +23,7 @@ return [
 
 ## Introduce bundle configuration to your config file
 
-```
+```yaml
 # config/packages/polidog_simple_api.yml
 
 polidog_simple_api: ~
@@ -31,7 +31,7 @@ polidog_simple_api: ~
 
 ## Usage
 
-```
+```php
 <?php
 
 declare(strict_types=1);
@@ -57,7 +57,7 @@ class UserController
         return [
             'id' => $user->getId(),
             'name' => $user->getUsername(),
-            'avatar' => $user->getAvatar()',
+            'avatar' => $user->getAvatar(),
         ];
     }
 
