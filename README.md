@@ -3,8 +3,8 @@
 ## Installation
 
 ```
-$ composer require polidog/simple-api-bundle "dev-master" 
-``` 
+$ composer require polidog/simple-api-bundle "dev-master"
+```
 
 Add config/bundles.php
 
@@ -48,9 +48,12 @@ class UserController
     private $userRepository;
 
     /**
+     * for php7
      * @Route("/user/{id}")
      * @Api()
      */
+    #[Route('/user/{$id}', name: 'app_user')]
+    #[Api]
     public function me($id): array
     {
         $user = $this->userRepository->find($id);
@@ -62,9 +65,12 @@ class UserController
     }
 
     /**
+     * for php7
      * @Route("/user/post", methods={"POST"})
      * @Api(statusCode=201)
      */
+    #[Route('/user/post', name: 'POST')]
+    #[Api(201)]
     public function post(Request $request): array
     {
         // TODO save logic.
