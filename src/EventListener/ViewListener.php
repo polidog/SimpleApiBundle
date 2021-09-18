@@ -10,20 +10,14 @@ use Polidog\SimpleApiBundle\ResponseHandler\HandlerProviderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ViewListener implements EventSubscriberInterface
 {
-    /**
-     * @var HandlerProviderInterface
-     */
-    private $provider;
+    private HandlerProviderInterface $provider;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(HandlerProviderInterface $provider, EventDispatcherInterface $eventDispatcher)
     {
@@ -31,7 +25,7 @@ class ViewListener implements EventSubscriberInterface
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function onKernelView(GetResponseForControllerResultEvent $event): void
+    final public function onKernelView(ViewEvent $event): void
     {
         $request = $event->getRequest();
         $annotation = $request->attributes->get('_simple_api_annotation');
@@ -50,7 +44,7 @@ class ViewListener implements EventSubscriberInterface
         }
 
         if (\is_array($parameters)) {
-            $viewEvent = new ViewParameterEvent($parameters, $request, $event->isMasterRequest());
+            $viewEvent = new ViewParameterEvent($parameters, $request, $event->isMainRequest());
             $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
             $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($viewEvent->getParameters());
             $newResponse->setStatusCode($annotation->getStatusCode());
@@ -58,7 +52,7 @@ class ViewListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::VIEW => ['onKernelView'],

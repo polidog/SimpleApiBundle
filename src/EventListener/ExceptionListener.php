@@ -8,36 +8,25 @@ use Polidog\SimpleApiBundle\Exception\ErrorException;
 use Polidog\SimpleApiBundle\ResponseHandler\HandlerProviderInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Throwable;
 
 class ExceptionListener implements EventSubscriberInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
+    private HandlerProviderInterface $provider;
 
-    /**
-     * @var HandlerProviderInterface
-     */
-    private $provider;
-
-    /**
-     * ExceptionListener constructor.
-     *
-     * @param LoggerInterface $logger
-     */
     public function __construct(HandlerProviderInterface $provider, LoggerInterface $logger = null)
     {
         $this->logger = $logger;
         $this->provider = $provider;
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event): void
+    final public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
         $this->logException($exception, sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', \get_class($exception), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 
         $request = $event->getRequest();
@@ -63,14 +52,14 @@ class ExceptionListener implements EventSubscriberInterface
         $event->setResponse($newResponse);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::EXCEPTION => ['onKernelException'],
         ];
     }
 
-    protected function logException(\Exception $exception, $message): void
+    private function logException(Throwable $exception, string $message): void
     {
         if (null !== $this->logger) {
             if (!$exception instanceof HttpExceptionInterface || $exception->getStatusCode() >= 500) {

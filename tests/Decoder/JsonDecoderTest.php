@@ -6,9 +6,12 @@ namespace Polidog\SimpleApiBundle\Test\Decoder;
 
 use PHPUnit\Framework\TestCase;
 use Polidog\SimpleApiBundle\Decoder\JsonDecoder;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class JsonDecoderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testSupport(): void
     {
         $jsonDecoder = new JsonDecoder();

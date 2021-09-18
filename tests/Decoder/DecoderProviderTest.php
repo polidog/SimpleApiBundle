@@ -7,17 +7,20 @@ namespace Polidog\SimpleApiBundle\Test\Decoder;
 use PHPUnit\Framework\TestCase;
 use Polidog\SimpleApiBundle\Decoder\DecoderInterface;
 use Polidog\SimpleApiBundle\Decoder\DecoderProvider;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DecoderProviderTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $decoder;
 
-    protected function setUp(): void
+    final protected function setUp(): void
     {
         $this->decoder = $this->prophesize(DecoderInterface::class);
     }
 
-    public function testCheckSupports(): void
+    final public function testCheckSupports(): void
     {
         $format = 'json';
 
@@ -32,7 +35,7 @@ class DecoderProviderTest extends TestCase
             ->shouldHaveBeenCalled();
     }
 
-    public function testCheckNoSupportedFormat(): void
+    final public function testCheckNoSupportedFormat(): void
     {
         $format = 'xml';
 
@@ -47,7 +50,7 @@ class DecoderProviderTest extends TestCase
             ->shouldHaveBeenCalled();
     }
 
-    public function testGetDecoder(): void
+    final public function testGetDecoder(): void
     {
         $format = 'json';
 
@@ -57,18 +60,16 @@ class DecoderProviderTest extends TestCase
         $decoderProvider = new DecoderProvider([]);
         $decoderProvider->add($this->decoder->reveal());
 
-        $decoder = $decoderProvider->getDecoder($format);
-        $this->assertInstanceOf(DecoderInterface::class, $decoder);
+        $decoderProvider->getDecoder($format);
 
         $this->decoder->support($format)
             ->shouldHaveBeenCalled();
     }
 
-    /**
-     * @expectedException \Polidog\SimpleApiBundle\Exception\UnsupportedMediaTypeHttpException
-     */
-    public function testNoSupportedGetDecoder(): void
+    final public function testNoSupportedGetDecoder(): void
     {
+        $this->expectException(\Polidog\SimpleApiBundle\Exception\UnsupportedMediaTypeHttpException::class);
+
         $format = 'xml';
 
         $this->decoder->support($format)

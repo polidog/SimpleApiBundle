@@ -12,31 +12,22 @@ class JsonHandler implements HandlerInterface
 {
     private const FORMAT = 'json';
 
-    /**
-     * @var bool
-     */
-    private $useJmsSerializer;
+    private bool $useJmsSerializer;
 
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
+    private SerializerInterface $serializer;
 
-    /**
-     * @param SerializerInterface $serializer
-     */
     public function __construct(bool $useJmsSerializer, SerializerInterface $serializer = null)
     {
         $this->useJmsSerializer = $useJmsSerializer;
         $this->serializer = $serializer;
     }
 
-    public function support(string $format): bool
+    final public function support(string $format): bool
     {
         return self::FORMAT === $format;
     }
 
-    public function handle(array $parameters, Response $response = null): Response
+    final public function handle(array $parameters, Response $response = null): Response
     {
         if (false === $this->useJmsSerializer || null === $this->serializer) {
             return new JsonResponse($parameters);

@@ -10,29 +10,11 @@ namespace Polidog\SimpleApiBundle\Annotations;
  */
 class Api implements ApiInterface
 {
-    const FORMAT_JSON = 'json';
+    public const FORMAT_JSON = 'json';
+    private string $format = self::FORMAT_JSON;
+    private int $statusCode = 200;
+    private bool $bodyParse = true;
 
-    /**
-     * @var string
-     */
-    private $format = self::FORMAT_JSON;
-
-    /**
-     * @var int
-     */
-    private $statusCode = 200;
-
-    /**
-     * @var bool
-     */
-    private $bodyParse = true;
-
-    /**
-     * Api constructor.
-     *
-     * @param $type
-     * @param $responseType
-     */
     public function __construct(array $params)
     {
         if (isset($params['value'])) {
@@ -45,26 +27,18 @@ class Api implements ApiInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getFormat()
+    final public function getFormat(): string
     {
         return $this->format;
     }
 
-    public function getStatusCode(): int
+    final public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    public function isBodyParse(): bool
+    final public function isBodyParse(): bool
     {
         return $this->bodyParse;
-    }
-
-    public function isUseResponseHandler(): bool
-    {
-        return $this->useResponseHandler;
     }
 }

@@ -8,25 +8,19 @@ use Polidog\SimpleApiBundle\Decoder\DecoderProviderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class BodySubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var DecoderProviderInterface
-     */
-    private $decoderProvider;
+    private DecoderProviderInterface $decoderProvider;
 
-    /**
-     * BodySubscriber constructor.
-     */
     public function __construct(DecoderProviderInterface $decoderProvider)
     {
         $this->decoderProvider = $decoderProvider;
     }
 
-    public function onKernelController(FilterControllerEvent $event): void
+    final public function onKernelController(ControllerEvent $event): void
     {
         $request = $event->getRequest();
         $annotation = $request->attributes->get('_simple_api_annotation');
@@ -54,7 +48,7 @@ class BodySubscriber implements EventSubscriberInterface
         ];
     }
 
-    protected function isDecodeable(Request $request): bool
+    private function isDecodeable(Request $request): bool
     {
         if (!\in_array($request->getMethod(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
             return false;

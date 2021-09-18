@@ -9,10 +9,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    final public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('polidog_simple_api');
+        $treeBuilder = new TreeBuilder('polidog_simple_api');
+        $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
                 ->booleanNode('use_jms_serializer')

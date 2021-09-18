@@ -7,15 +7,12 @@ namespace Polidog\SimpleApiBundle\EventListener;
 use Doctrine\Common\Annotations\Reader;
 use Polidog\SimpleApiBundle\Annotations\ApiInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AnnotationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var Reader
-     */
-    private $annotationReader;
+    private Reader $annotationReader;
 
     /**
      * ControllerSubscriber constructor.
@@ -28,7 +25,7 @@ class AnnotationSubscriber implements EventSubscriberInterface
     /**
      * @throws \ReflectionException
      */
-    public function onKernelController(FilterControllerEvent $event): void
+    public function onKernelController(ControllerEvent $event): void
     {
         $request = $event->getRequest();
         $controller = $event->getController();
@@ -53,7 +50,7 @@ class AnnotationSubscriber implements EventSubscriberInterface
         $request->attributes->set('_simple_api_annotation', $annotation);
     }
 
-    private function getAnnotation(array $annotations)
+    private function getAnnotation(array $annotations): ?ApiInterface
     {
         foreach ($annotations as $annotation) {
             if ($annotation instanceof ApiInterface) {
@@ -64,7 +61,7 @@ class AnnotationSubscriber implements EventSubscriberInterface
         return null;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => ['onKernelController', 40],

@@ -6,17 +6,20 @@ namespace Polidog\SimpleApiBundle\Decoder;
 
 class JsonDecoder implements DecoderInterface
 {
-    public function support(string $format): bool
+    final public function support(string $format): bool
     {
         return 'json' === $format;
     }
 
-    public function decode(string $data): array
+    /**
+     * @throws \JsonException
+     */
+    final public function decode(string $data): array
     {
-        if (0 === \strlen($data)) {
+        if ('' === $data) {
             return [];
         }
 
-        return @json_decode($data, true);
+        return json_decode($data, true, 512, \JSON_THROW_ON_ERROR);
     }
 }

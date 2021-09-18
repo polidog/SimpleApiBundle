@@ -11,7 +11,7 @@ class DecoderProvider implements DecoderProviderInterface
     /**
      * @var DecoderInterface[]
      */
-    private $decoders;
+    private array $decoders;
 
     /**
      * DecoderProvider constructor.
