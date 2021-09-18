@@ -8,6 +8,7 @@ namespace Polidog\SimpleApiBundle\Annotations;
  * @Annotation
  * @Target({"METHOD","CLASS"})
  */
+#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class Api implements ApiInterface
 {
     public const FORMAT_JSON = 'json';

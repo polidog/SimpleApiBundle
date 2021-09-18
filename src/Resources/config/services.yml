@@ -49,3 +49,5 @@ services:
             $annotationReader: '@annotation_reader'
             $attributeReader: '@Koriym\Attributes\AttributeReader'
 
+
+    Koriym\Attributes\AttributeReader:
