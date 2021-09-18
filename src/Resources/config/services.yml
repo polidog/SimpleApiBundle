@@ -39,6 +39,13 @@ services:
 
     Polidog\SimpleApiBundle\EventListener\AnnotationSubscriber:
         arguments:
-            $annotationReader: '@annotation_reader'
+            $annotationReader: '@Koriym\Attributes\DualReader'
         tags:
             - { name: kernel.event_subscriber }
+
+    # annotation reader
+    Koriym\Attributes\DualReader:
+        arguments:
+            $annotationReader: '@annotation_reader'
+            $attributeReader: '@Koriym\Attributes\AttributeReader'
+
