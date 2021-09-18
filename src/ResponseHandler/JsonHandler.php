@@ -14,9 +14,9 @@ class JsonHandler implements HandlerInterface
 
     private bool $useJmsSerializer;
 
-    private SerializerInterface $serializer;
+    private ?SerializerInterface $serializer;
 
-    public function __construct(bool $useJmsSerializer, SerializerInterface $serializer = null)
+    public function __construct(bool $useJmsSerializer, ?SerializerInterface $serializer = null)
     {
         $this->useJmsSerializer = $useJmsSerializer;
         $this->serializer = $serializer;
