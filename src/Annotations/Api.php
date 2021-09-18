@@ -8,24 +8,18 @@ namespace Polidog\SimpleApiBundle\Annotations;
  * @Annotation
  * @Target({"METHOD","CLASS"})
  */
-#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class Api implements ApiInterface
 {
     public const FORMAT_JSON = 'json';
-    private string $format = self::FORMAT_JSON;
-    private int $statusCode = 200;
-    private bool $bodyParse = true;
+    private string $format;
+    private int $statusCode;
+    private bool $bodyParse;
 
-    public function __construct(array $params)
+    public function __construct(int $statusCode = 200, bool $bodyParse = true, string $format = self::FORMAT_JSON)
     {
-        if (isset($params['value'])) {
-            $this->statusCode = (int) $params['value'];
-        }
-        foreach (['type', 'bodyParse', 'statusCode'] as $target) {
-            if (isset($params[$target])) {
-                $this->$target = $params[$target];
-            }
-        }
+        $this->statusCode = $statusCode;
+        $this->bodyParse = $bodyParse;
+        $this->format = $format;
     }
 
     final public function getFormat(): string
