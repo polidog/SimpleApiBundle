@@ -10,5 +10,8 @@ interface HandlerInterface
 {
     public function support(string $format): bool;
 
-    public function handle(array $parameters, Response $response = null): Response;
+    /**
+     * @param mixed $parameters
+     */
+    public function handle($parameters, Response $response = null): Response;
 }

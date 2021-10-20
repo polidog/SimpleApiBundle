@@ -33,23 +33,17 @@ class ViewListener implements EventSubscriberInterface
             return;
         }
 
-        $parameters = $event->getControllerResult();
+        $result = $event->getControllerResult();
 
-        if ($parameters instanceof Response) {
+        if ($result instanceof Response) {
             return;
         }
 
-        if (null === $parameters) {
-            $parameters = [];
-        }
-
-        if (\is_array($parameters)) {
-            $viewEvent = new ViewParameterEvent($parameters, $request, $event->isMainRequest());
-            $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
-            $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($viewEvent->getParameters());
-            $newResponse->setStatusCode($annotation->getStatusCode());
-            $event->setResponse($newResponse);
-        }
+        $viewEvent = new ViewParameterEvent($request, $event->isMainRequest(), $result);
+        $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
+        $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($viewEvent->getData());
+        $newResponse->setStatusCode($annotation->getStatusCode());
+        $event->setResponse($newResponse);
     }
 
     public static function getSubscribedEvents(): array

@@ -27,7 +27,10 @@ class JsonHandler implements HandlerInterface
         return self::FORMAT === $format;
     }
 
-    final public function handle(array $parameters, Response $response = null): Response
+    /**
+     * @param mixed $parameters
+     */
+    final public function handle($parameters, Response $response = null): Response
     {
         if (false === $this->useJmsSerializer || null === $this->serializer) {
             return new JsonResponse($parameters);

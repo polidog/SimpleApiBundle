@@ -7,42 +7,51 @@ namespace Polidog\SimpleApiBundle\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class ViewParameterEvent extends Event
+/**
+ * @template T
+ */
+final class ViewParameterEvent extends Event
 {
-    private array $parameters;
-
     private Request $request;
-
     private bool $masterRequest;
 
-    public function __construct(array $parameters, Request $request, bool $masterRequest)
+    /**
+     * @var T
+     */
+    private $data;
+
+    /**
+     * @param T $data
+     */
+    public function __construct(Request $request, bool $masterRequest, $data)
     {
-        $this->parameters = $parameters;
         $this->request = $request;
         $this->masterRequest = $masterRequest;
+        $this->data = $data;
     }
 
-    final public function merge(array $parameters): void
+    /**
+     * @return T
+     */
+    public function getData()
     {
-        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->data;
     }
 
-    final public function getParameters(): array
+    /**
+     * @param T $data
+     */
+    public function setData($data): void
     {
-        return $this->parameters;
+        $this->data = $data;
     }
 
-    final public function setParameters(array $parameters): void
-    {
-        $this->parameters = $parameters;
-    }
-
-    final public function getRequest(): Request
+    public function getRequest(): Request
     {
         return $this->request;
     }
 
-    final public function isMasterRequest(): bool
+    public function isMasterRequest(): bool
     {
         return $this->masterRequest;
     }
