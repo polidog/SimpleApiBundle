@@ -32,6 +32,10 @@ class JsonHandler implements HandlerInterface
      */
     final public function handle($parameters, Response $response = null): Response
     {
+        if (null === $parameters) {
+            return new JsonResponse();
+        }
+
         if (false === $this->useJmsSerializer || null === $this->serializer) {
             return new JsonResponse($parameters);
         }
