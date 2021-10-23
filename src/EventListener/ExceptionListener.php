@@ -45,7 +45,7 @@ class ExceptionListener implements EventSubscriberInterface
             ];
         }
 
-        $statusCode = 0 === $exception->getCode() ? 500 : $exception->getCode();
+        $statusCode = 200 > $exception->getCode() ? 500 : $exception->getCode();
 
         $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($parameters);
         $newResponse->setStatusCode($statusCode);
