@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polidog\SimpleApiBundle\ResponseHandler;
 
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,7 @@ class JsonHandler implements HandlerInterface
     /**
      * @param mixed $parameters
      */
-    final public function handle($parameters, Response $response = null): Response
+    final public function handle($parameters, array $groups = [], ?string $version = null): Response
     {
         if (null === $parameters) {
             return new JsonResponse();
@@ -39,7 +40,16 @@ class JsonHandler implements HandlerInterface
         if (false === $this->useJmsSerializer || null === $this->serializer) {
             return new JsonResponse($parameters);
         }
-        $json = $this->serializer->serialize($parameters, self::FORMAT);
+
+        $context = SerializationContext::create();
+        if (empty($groups)) {
+            $context->setGroups(array_merge(['Default'], $groups));
+        }
+        if (null !== $version) {
+            $context->setVersion($version);
+        }
+
+        $json = $this->serializer->serialize($parameters, self::FORMAT, $context);
 
         return JsonResponse::fromJsonString($json);
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polidog\SimpleApiBundle\EventListener;
 
+use Polidog\SimpleApiBundle\Annotations\Api;
 use Polidog\SimpleApiBundle\Event\ViewParameterEvent;
 use Polidog\SimpleApiBundle\Events;
 use Polidog\SimpleApiBundle\ResponseHandler\HandlerProviderInterface;
@@ -32,6 +33,7 @@ class ViewListener implements EventSubscriberInterface
         if (null === $annotation) {
             return;
         }
+        \assert($annotation instanceof Api);
 
         $result = $event->getControllerResult();
 
@@ -41,7 +43,13 @@ class ViewListener implements EventSubscriberInterface
 
         $viewEvent = new ViewParameterEvent($request, $event->isMainRequest(), $result);
         $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
-        $newResponse = $this->provider->getHandler($annotation->getFormat())->handle($viewEvent->getData());
+        $newResponse = $this->provider
+            ->getHandler($annotation->getFormat())
+            ->handle(
+                $viewEvent->getData(),
+                $annotation->getGroups(),
+                $annotation->getVersion()
+            );
         $newResponse->setStatusCode($annotation->getStatusCode());
         $event->setResponse($newResponse);
     }

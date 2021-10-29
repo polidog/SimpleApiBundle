@@ -13,5 +13,5 @@ interface HandlerInterface
     /**
      * @param mixed $parameters
      */
-    public function handle($parameters, Response $response = null): Response;
+    public function handle($parameters, array $groups = [], ?string $version = null): Response;
 }

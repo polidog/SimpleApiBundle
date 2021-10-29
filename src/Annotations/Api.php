@@ -17,12 +17,16 @@ class Api implements ApiInterface
     private string $format;
     private int $statusCode;
     private bool $bodyParse;
+    private array $groups;
+    private ?string $version;
 
-    public function __construct(int $statusCode = 200, bool $bodyParse = true, string $format = self::FORMAT_JSON)
+    public function __construct(int $statusCode = 200, bool $bodyParse = true, string $format = self::FORMAT_JSON, array $groups = [], ?string $version = null)
     {
         $this->statusCode = $statusCode;
         $this->bodyParse = $bodyParse;
         $this->format = $format;
+        $this->groups = $groups;
+        $this->version = $version;
     }
 
     final public function getFormat(): string
@@ -38,5 +42,15 @@ class Api implements ApiInterface
     final public function isBodyParse(): bool
     {
         return $this->bodyParse;
+    }
+
+    final public function getGroups(): array
+    {
+        return $this->groups;
+    }
+
+    final public function getVersion(): ?string
+    {
+        return $this->version;
     }
 }
