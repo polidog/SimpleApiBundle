@@ -43,7 +43,7 @@ class JsonHandler implements HandlerInterface
 
         $context = SerializationContext::create();
         $context->setSerializeNull(true);
-        if (empty($groups)) {
+        if (!empty($groups)) {
             $context->setGroups(array_merge(['Default'], $groups));
         }
         if (null !== $version) {
