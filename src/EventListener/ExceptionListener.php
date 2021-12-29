@@ -41,7 +41,9 @@ class ExceptionListener implements EventSubscriberInterface
             ];
         } else {
             $parameters = [
-                'message' => $exception->getMessage(),
+                'errors' => [
+                    'message' => $exception->getMessage(),
+                ],
             ];
         }
 
