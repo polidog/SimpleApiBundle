@@ -20,21 +20,21 @@
         }
     },
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0|^8.1|^8.2",
         "ext-json": "*",
 
-        "symfony/http-foundation": "^4.4|^5.3",
-        "symfony/config": "^4.4|^5.3",
-        "symfony/http-kernel": "^4.4|^5.3",
-        "symfony/event-dispatcher": "^4.4|^5.3",
-        "symfony/dependency-injection": "^4.4|^5.3",
+        "symfony/http-foundation": "^4.4|^5.4",
+        "symfony/config": "^4.4|^5.4",
+        "symfony/http-kernel": "^4.4|^5.4",
+        "symfony/event-dispatcher": "^4.4|^5.4",
+        "symfony/dependency-injection": "^4.4|^5.4",
         "doctrine/common": ">=2.6",
         "jms/serializer": "~3.0",
         "koriym/attributes": "^1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.1",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.6",
         "phpspec/prophecy-phpunit": "^2.0",
         "vimeo/psalm": "^4.10"
     },
