@@ -41,7 +41,8 @@ class ViewListener implements EventSubscriberInterface
             return;
         }
 
-        $viewEvent = new ViewParameterEvent($request, $event->isMainRequest(), $result);
+        $masterRequest = method_exists($event, 'isMainRequest') ? $event->isMainRequest() : $event->isMasterRequest();
+        $viewEvent = new ViewParameterEvent($request, $masterRequest, $result);
         $this->eventDispatcher->dispatch($viewEvent, Events::VIEW_PARAMETERS);
         $newResponse = $this->provider
             ->getHandler($annotation->getFormat())
