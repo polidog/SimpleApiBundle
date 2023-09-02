@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Polidog\SimpleApiBundle\DependencyInjection;
 
-use Exception;
 use Polidog\SimpleApiBundle\ResponseHandler\JsonHandler;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,7 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class PolidogSimpleApiExtension extends Extension
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     final public function load(array $configs, ContainerBuilder $container): void
     {

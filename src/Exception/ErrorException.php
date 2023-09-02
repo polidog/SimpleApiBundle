@@ -6,15 +6,10 @@ namespace Polidog\SimpleApiBundle\Exception;
 
 class ErrorException extends \RuntimeException
 {
-    /**
-     * @var mixed
-     */
     private $data;
 
     /**
      * @param mixed $data
-     *
-     * @return ErrorException
      */
     public static function newException(int $statusCode, array $data): self
     {
@@ -25,9 +20,6 @@ class ErrorException extends \RuntimeException
         return $self;
     }
 
-    /**
-     * @return mixed
-     */
     public function getData()
     {
         return $this->data;

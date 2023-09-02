@@ -14,8 +14,6 @@ interface DecoderProviderInterface
     public function supports(string $format): bool;
 
     /**
-     * @param $format
-     *
      * @throws UnsupportedMediaTypeHttpException
      */
     public function getDecoder(string $format): DecoderInterface;

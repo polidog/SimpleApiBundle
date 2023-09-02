@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Throwable;
 
 class ExceptionListener implements EventSubscriberInterface
 {
@@ -27,7 +26,7 @@ class ExceptionListener implements EventSubscriberInterface
     final public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        $this->logException($exception, sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', \get_class($exception), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+        $this->logException($exception, sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', $exception::class, $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 
         $request = $event->getRequest();
         $annotation = $request->attributes->get('_simple_api_annotation');
@@ -61,7 +60,7 @@ class ExceptionListener implements EventSubscriberInterface
         ];
     }
 
-    private function logException(Throwable $exception, string $message): void
+    private function logException(\Throwable $exception, string $message): void
     {
         if (null !== $this->logger) {
             if (!$exception instanceof HttpExceptionInterface || $exception->getStatusCode() >= 500) {
